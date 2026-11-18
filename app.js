@@ -66,9 +66,7 @@ function showIntake() {
   showStep('Consultation intake preview', `
     <h2 tabindex="-1">You’ve reached the intake</h2>
     <p>A live intake would ask for contact information and other details needed to review your request. This prototype skips those fields.</p>
-    <div class="stage-actions"><button class="button" type="button">Finish demo</button>
-    <button class="quiet" type="button">Back</button></div>`, 3);
-  stage.querySelector('.quiet').addEventListener('click', variant === 'guided' ? showOverview : () => overview.click());
+    <button class="button" type="button">Finish demo</button>`, 3);
   stage.querySelector('.button').addEventListener('click', () => {
     track('demo_complete');
     showStep('Demo complete', `
