@@ -19,9 +19,10 @@ function track(name, detail = '') {
   events.append(item);
 }
 
-function showStep(step, markup) {
+function showStep(step, markup, progress) {
   hero.hidden = true;
   flow.hidden = false;
+  flow.dataset.progress = progress;
   stepLabel.textContent = step;
   stage.innerHTML = '<div>' + markup + '</div>';
   stage.querySelector('h2').focus();
@@ -37,7 +38,7 @@ function showTopic() {
         `).join('')}
       </fieldset>
       <button class="button">Show my overview</button>
-    </form>`);
+    </form>`, 1);
   stage.querySelector('form').addEventListener('submit', event => {
     event.preventDefault();
     selection = new FormData(event.currentTarget).get('topic');
@@ -54,7 +55,7 @@ function showOverview() {
     <div class="stage-actions">
       <button class="button" type="button">Start consultation</button>
       <button class="quiet" type="button">Choose another topic</button>
-    </div>`);
+    </div>`, 2);
   track('tailored_overview_view');
   stage.querySelector('.button').addEventListener('click', showIntake);
   stage.querySelector('.quiet').addEventListener('click', showTopic);
@@ -65,12 +66,12 @@ function showIntake() {
   showStep('Consultation intake preview', `
     <h2 tabindex="-1">You’ve reached the intake</h2>
     <p>A live intake would ask for contact information and other details needed to review your request. This prototype skips those fields.</p>
-    <button class="button" type="button">Finish demo</button>`);
+    <button class="button" type="button">Finish demo</button>`, 3);
   stage.querySelector('.button').addEventListener('click', () => {
     track('demo_complete');
     showStep('Demo complete', `
       <h2 tabindex="-1">Preview complete</h2>
-      <p>No consultation was requested and no personal information was collected.</p>`);
+      <p>No consultation was requested and no personal information was collected.</p>`, 3);
   });
 }
 
