@@ -63,19 +63,84 @@ function showOverview() {
   stage.querySelector('.quiet').addEventListener('click', showTopic);
 }
 
+const requestKey = 'carepath-demo-request';
+
+function readRequest() {
+  try { return JSON.parse(localStorage.getItem(requestKey)); }
+  catch { return null; }
+}
+
+function storeRequest(request) {
+  try { localStorage.setItem(requestKey, JSON.stringify(request)); return true; }
+  catch { return false; }
+}
+
 function showIntake() {
   track('consultation_start');
-  showStep('Consultation intake preview', `
-    <h2 tabindex="-1">You’ve reached the intake</h2>
-    <p>A live intake would ask for contact information and other details needed to review your request. This prototype skips those fields.</p>
-    <button class="button" type="button">Finish demo</button>`, 3);
-  stage.querySelector('.button').addEventListener('click', () => {
-    track('demo_complete');
-    showStep('Demo complete', `
-      <h2 tabindex="-1">Preview complete</h2>
-      <p>No consultation was requested and no personal information was collected.</p>`, 3);
+  showStep('Sample intake', `
+    <h2 tabindex="-1">Build a sample request</h2>
+    <p>Use the fictional profile below. This demo never asks for personal or medical information.</p>
+    <form>
+      <fieldset><legend>Sample profile</legend>
+        <label class="choice"><input type="checkbox" required> Use the sample patient profile</label>
+      </fieldset>
+      <button class="button">Review sample request</button>
+    </form>`, 3);
+  stage.querySelector('form').addEventListener('submit', event => {
+    event.preventDefault();
+    showReview();
   });
 }
+
+function showReview() {
+  showStep('Review', `
+    <h2 tabindex="-1">Check your request</h2>
+    <dl class="receipt"><dt>Patient</dt><dd>Alex Morgan</dd><dt>Request type</dt><dd>First consultation</dd></dl>
+    <p>This sends a fictional request to the demo inbox on this device.</p>
+    <div class="stage-actions">
+      <button class="button" type="button">Send sample request</button>
+      <button class="quiet" type="button">Edit request</button>
+    </div>
+    <p role="status"></p>`, 3);
+  stage.querySelector('.quiet').addEventListener('click', showIntake);
+  stage.querySelector('.button').addEventListener('click', () => {
+    const request = { reference: 'CP-' + crypto.randomUUID().slice(0, 6).toUpperCase(), reviewed: false };
+    if (!storeRequest(request)) {
+      stage.querySelector('[role="status"]').textContent = t('This browser could not save the sample request.');
+      return;
+    }
+    track('demo_complete');
+    showReceipt(request);
+  });
+}
+
+function showReceipt(request) {
+  showStep('Request timeline', `
+    <h2 tabindex="-1">${request.reviewed ? 'Sample review complete' : 'Sample request received'}</h2>
+    <dl class="receipt"><dt>Reference</dt><dd id="request-reference"></dd></dl>
+    <ol class="timeline">
+      <li>Sample request submitted</li>
+      <li>${request.reviewed ? 'Sample review completed' : 'Waiting for sample review'}</li>
+    </ol>
+    <p>No real consultation was requested.</p>
+    ${request.reviewed ? '' : '<button class="button" type="button">Simulate team review</button>'}
+    <p role="status"></p>`, 3);
+  stage.querySelector('#request-reference').textContent = request.reference;
+  stage.querySelector('.button')?.addEventListener('click', () => {
+    const updated = { ...request, reviewed: true };
+    if (storeRequest(updated)) showReceipt(updated);
+    else stage.querySelector('[role="status"]').textContent = t('This browser could not save the sample request.');
+  });
+}
+
+const resumeButton = document.querySelector('#resume-request');
+function syncResume() { resumeButton.hidden = !readRequest(); }
+syncResume();
+resumeButton.addEventListener('click', () => {
+  const request = readRequest();
+  if (request) showReceipt(request);
+});
+overview.addEventListener('click', syncResume);
 
 if (variant === 'direct') {
   document.querySelector('#hero-title').textContent = 'Start an online consultation.';

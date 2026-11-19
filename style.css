@@ -101,3 +101,20 @@ summary { cursor: pointer; font-weight: 690; }
   .button, .quiet, .choice { transition: background-color .16s ease, border-color .16s ease; }
   @keyframes enter { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 }
+:root { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; --paper: #f7f5fc; --ink: #282137; --muted: #51485f; --line: #e1d9ec; --accent: #623c9b; }
+.wrap { max-width: 1240px; }
+.hero { align-items: center; padding-block: clamp(2rem, 6vw, 5rem); }
+.hero h1 { font: 680 clamp(2.5rem, 5.5vw, 5rem)/1.02 -apple-system, BlinkMacSystemFont, system-ui, sans-serif; letter-spacing: -.065em; }
+.eyebrow { color: var(--accent); }
+.journey { border: 1px solid #e1d5f2; border-radius: 26px; background: linear-gradient(150deg,#f2e9fd,#fff 82%); color: var(--ink); box-shadow: 0 16px 44px #44266512; }
+.journey li p { color: var(--muted); }
+.journey li::before { background: #e9d9fa; border-color: #e1d0f4; color: #4e2b7e; }
+.route-art { height: 102px; }
+.route-art span { border-color: #9f83c4; }
+.route-art::before { background: #a77bd9; }
+.flow { border-radius: 24px; box-shadow: 0 16px 44px #44266512; }
+.button,.quiet,.choice { border-radius: 12px; }
+#resume-request { margin: .5rem 0 0 .3rem; }
+.receipt { display: grid; grid-template-columns: auto 1fr; gap: .35rem 1rem; padding: 1rem; border-radius: 14px; background: #f5effd; }
+.receipt dt { color: var(--muted); } .receipt dd { margin: 0; font-weight: 650; overflow-wrap: anywhere; }
+.timeline { padding-left: 1.3rem; } .timeline li { margin: .45rem 0; }
