@@ -1,11 +1,10 @@
 const { t, apply, url } = window.siteLocale;
-const variant = new URLSearchParams(location.search).get('path') === 'direct' ? 'direct' : 'guided';
+let variant = new URLSearchParams(location.search).get('path') === 'direct' ? 'direct' : 'guided';
 const topics = {
   steps: ['How the process works', 'You’d open a private intake, share the details the care team requests, and wait for a response about the next step.'],
   availability: ['Timing and availability', 'Availability depends on the service. Starting an intake would begin a request. It would not reserve an appointment or guarantee a response time.'],
   team: ['Who reviews the request', 'The service would tell you which team reviews your intake and how to contact them before you share personal information.'],
 };
-const hero = document.querySelector('.hero');
 const flow = document.querySelector('#flow');
 const stage = document.querySelector('#stage');
 const stepLabel = document.querySelector('#step');
@@ -22,12 +21,11 @@ function track(name, detail = '') {
 }
 
 function showStep(step, markup, progress) {
-  hero.hidden = true;
-  flow.hidden = false;
   flow.dataset.progress = progress;
   stepLabel.textContent = t(step);
   stage.innerHTML = '<div>' + markup + '</div>';
   apply(stage);
+  if (!flow.open) flow.showModal();
   stage.querySelector('h2').focus();
 }
 
@@ -211,17 +209,30 @@ function showHistory() {
 
 syncResume();
 resumeButton.addEventListener('click', showHistory);
-overview.addEventListener('click', syncResume);
+flow.addEventListener('close', syncResume);
 
-if (variant === 'direct') {
-  document.querySelector('#hero-title').textContent = 'Start an online consultation.';
-  document.querySelector('#offer-copy').textContent = 'Open the intake preview to see where a consultation request would begin.';
-  document.querySelector('#variant-label').textContent = 'You’re viewing the direct version.';
-  const link = document.querySelector('#variant-link');
-  link.href = url('./');
-  link.textContent = 'Open the guided version';
-  begin.textContent = 'Start consultation';
+const variantLink = document.querySelector('#variant-link');
+function renderVariant() {
+  const direct = variant === 'direct';
+  document.querySelector('#hero-title').textContent = t(direct ? 'Start an online consultation.' : 'Request an online consultation');
+  document.querySelector('#offer-copy').textContent = t(direct
+    ? 'Open the intake preview to see where a consultation request would begin.'
+    : 'See what you’ll be asked, then send your request when you’re ready. You can check its status at any time.');
+  document.querySelector('#variant-label').textContent = t(direct ? 'You’re viewing the direct version.' : 'You’re viewing the guided version.');
+  variantLink.href = url(direct ? './' : '?path=direct');
+  variantLink.textContent = t(direct ? 'Open the guided version' : 'Open the direct version');
+  begin.textContent = t(direct ? 'Start consultation' : 'Begin a care request');
 }
+
+renderVariant();
+variantLink.addEventListener('click', event => {
+  if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+  event.preventDefault();
+  history.replaceState(null, '', variantLink.href);
+  variant = variant === 'direct' ? 'guided' : 'direct';
+  renderVariant();
+  track('landing_view');
+});
 begin.addEventListener('click', () => {
   if (variant === 'direct') {
     showIntake();
@@ -230,10 +241,6 @@ begin.addEventListener('click', () => {
     showTopic();
   }
 });
-overview.addEventListener('click', () => {
-  flow.hidden = true;
-  hero.hidden = false;
-  begin.focus();
-});
+overview.addEventListener('click', () => flow.close());
 track('landing_view');
 begin.hidden = false;

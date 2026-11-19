@@ -7,9 +7,9 @@
   <meta name="robots" content="noindex">
   <title>CarePath | Online consultation preview</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="./style.css?v=project-ui">
+  <link rel="stylesheet" href="./style.css?v=landing">
   <script src="./locale.js?v=project-ui"></script>
-  <script src="./app.js?v=patient-experience" defer></script>
+  <script src="./app.js?v=landing" defer></script>
   <link rel="stylesheet" href="./locale.css">
 </head>
 <body>
@@ -38,11 +38,11 @@
         </ol>
       </aside>
     </section>
-    <section class="flow" id="flow" aria-label="Consultation preview" hidden>
+    <dialog class="flow" id="flow" aria-label="Consultation preview">
       <div class="flow-header"><p id="step"></p><button id="return" class="quiet" type="button">Back to overview</button></div>
       <div class="progress-track" aria-hidden="true"><span></span><span></span><span></span></div>
       <div id="stage"></div>
-    </section>
+    </dialog>
     <details class="inspection"><summary>Compare entry paths and view activity</summary>
     <section class="testing" aria-label="Entry paths">
       <div><h2>Compare the entry paths</h2><p id="variant-label">You’re viewing the guided version.</p></div>

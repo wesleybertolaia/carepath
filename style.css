@@ -157,3 +157,15 @@ summary { cursor: pointer; font-weight: 690; }
   .care-hero-photo { height: 130px; min-height: 0; border-radius: 0 0 20px 20px; }
   .hero .journey ol { grid-template-columns: 1fr; gap: .3rem; }
 }
+
+.flow {
+  width: min(660px, calc(100% - 1rem));
+  max-height: calc(100dvh - 1rem);
+  margin: auto;
+  color: inherit;
+}
+.flow::backdrop { background: #2b203d92; }
+@media (max-height: 540px) {
+  .flow { padding: .65rem .85rem; }
+  .flow-header { margin-bottom: .35rem; }
+}
