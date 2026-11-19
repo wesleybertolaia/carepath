@@ -128,3 +128,6 @@ summary { cursor: pointer; font-weight: 690; }
 .hero .privacy { max-width: 42ch; margin-top: .9rem; }
 .journey { border-top: 3px solid #8669b7; }
 .journey li + li { padding-top: .1rem; }
+
+.care-hero-photo { display: block; width: 100%; height: clamp(95px, 15vw, 165px); object-fit: cover; border-radius: 16px; margin-bottom: .85rem; }
+.hero .offer > p.signature-line { margin: 0 0 .5rem; color: #62428c; font-size: .82rem; letter-spacing: .02em; font-weight: 720; }
