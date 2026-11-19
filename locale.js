@@ -1,5 +1,18 @@
 (() => {
   const messages = {
+    "Online consultations": "Consultas online",
+    "Start your care request.": "Inicie sua solicitação de atendimento.",
+    "See what your request involves and track its progress from submission to review.": "Entenda as etapas e acompanhe sua solicitação do envio à revisão.",
+    "Request history": "Histórico de solicitações",
+    "Your requests": "Suas solicitações",
+    "Withdrawn": "Retirada",
+    "Reviewed": "Revisada",
+    "In review": "Em análise",
+    "Practice workspace. No clinical service is provided.": "Ambiente de prática. Não oferece atendimento clínico.",
+    "Enable JavaScript to use the request workspace.": "Ative o JavaScript para usar a área de solicitações.",
+    "Compare entry paths and view activity": "Comparar caminhos de entrada e ver atividade",
+    "Entry paths": "Caminhos de entrada",
+
     "Sample request withdrawn": "Solicitação de exemplo retirada",
     "This request is closed. You can return to the overview and start another sample request.": "Esta solicitação foi encerrada. Você pode voltar ao início e criar outra solicitação de exemplo.",
     "The sample team has finished reviewing this request. No action is needed.": "A equipe fictícia concluiu a revisão. Nenhuma ação é necessária.",

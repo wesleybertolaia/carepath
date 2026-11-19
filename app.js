@@ -65,13 +65,22 @@ function showOverview() {
 
 const requestKey = 'carepath-demo-request';
 
-function readRequest() {
-  try { return JSON.parse(localStorage.getItem(requestKey)); }
-  catch { return null; }
+function readRequests() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(requestKey));
+    return Array.isArray(stored) ? stored : stored?.reference ? [stored] : [];
+  } catch { return []; }
 }
 
 function storeRequest(request) {
-  try { localStorage.setItem(requestKey, JSON.stringify(request)); return true; }
+  try {
+    const history = readRequests();
+    const index = history.findIndex(item => item.reference === request.reference);
+    if (index === -1) history.unshift(request);
+    else history[index] = request;
+    localStorage.setItem(requestKey, JSON.stringify(history));
+    return true;
+  }
   catch { return false; }
 }
 
@@ -137,6 +146,12 @@ function showReceipt(request) {
       </div>`}
     <p role="status"></p>`, 3);
   stage.querySelector('#request-reference').textContent = request.reference;
+  const historyLink = document.createElement('button');
+  historyLink.className = 'quiet history-link';
+  historyLink.type = 'button';
+  historyLink.textContent = t('Request history');
+  historyLink.addEventListener('click', showHistory);
+  stage.firstElementChild.append(historyLink);
   stage.querySelector('#withdraw-request')?.addEventListener('click', () => {
     showStep('Withdraw request', `
       <h2 tabindex="-1">Withdraw this sample request?</h2>
@@ -161,12 +176,26 @@ function showReceipt(request) {
 }
 
 const resumeButton = document.querySelector('#resume-request');
-function syncResume() { resumeButton.hidden = !readRequest(); }
+function syncResume() { resumeButton.hidden = !readRequests().length; }
+
+function showHistory() {
+  showStep('Request history', `<h2 tabindex="-1">Your requests</h2><ul class="request-history"></ul>`, 3);
+  const list = stage.querySelector('ul');
+  for (const request of readRequests()) {
+    const row = document.createElement('li');
+    const button = document.createElement('button');
+    button.className = 'quiet';
+    button.textContent = request.reference;
+    button.addEventListener('click', () => showReceipt(request));
+    const status = document.createElement('span');
+    status.textContent = t(request.withdrawn ? 'Withdrawn' : request.reviewed ? 'Reviewed' : 'In review');
+    row.append(button, status);
+    list.append(row);
+  }
+}
+
 syncResume();
-resumeButton.addEventListener('click', () => {
-  const request = readRequest();
-  if (request) showReceipt(request);
-});
+resumeButton.addEventListener('click', showHistory);
 overview.addEventListener('click', syncResume);
 
 if (variant === 'direct') {

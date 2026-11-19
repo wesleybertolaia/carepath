@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="CarePath is a portfolio prototype for an online consultation landing page and intake funnel.">
+  <meta name="description" content="Prepare a care request and follow its progress through review.">
   <meta name="robots" content="noindex">
   <title>CarePath | Online consultation preview</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="./style.css?v=next-actions">
-  <script src="./locale.js?v=next-actions"></script>
-  <script src="./app.js?v=next-actions" defer></script>
+  <link rel="stylesheet" href="./style.css?v=product-workspace">
+  <script src="./locale.js?v=product-workspace"></script>
+  <script src="./app.js?v=product-workspace" defer></script>
   <link rel="stylesheet" href="./locale.css">
 </head>
 <body>
@@ -20,12 +20,12 @@
   <main class="wrap">
     <section class="hero" aria-labelledby="hero-title">
       <div class="offer">
-        <p class="eyebrow">Online consultation · Portfolio prototype</p>
-        <h1 id="hero-title">Know the next step before you start.</h1>
-        <p id="offer-copy">Get a short walkthrough of an online consultation. See what the process involves and decide when you’re ready to begin.</p>
+        <p class="eyebrow">Online consultations</p>
+        <h1 id="hero-title">Start your care request.</h1>
+        <p id="offer-copy">See what your request involves and track its progress from submission to review.</p>
         <button class="button" id="begin" type="button" hidden>See how it works</button>
-        <button class="quiet" id="resume-request" type="button" hidden>Track last sample request</button>
-        <noscript><p>Enable JavaScript to try this interactive prototype.</p></noscript>
+        <button class="quiet" id="resume-request" type="button" hidden>Request history</button>
+        <noscript><p>Enable JavaScript to use the request workspace.</p></noscript>
         <p class="privacy">No personal or medical details are collected in this demo.</p>
       </div>
       <aside class="journey" aria-labelledby="journey-title">
@@ -42,16 +42,17 @@
       <div class="progress-track" aria-hidden="true"><span></span><span></span><span></span></div>
       <div id="stage"></div>
     </section>
-    <section class="testing" aria-label="Prototype variants">
+    <details class="inspection"><summary>Compare entry paths and view activity</summary>
+    <section class="testing" aria-label="Entry paths">
       <div><h2>Compare the entry paths</h2><p id="variant-label">You’re viewing the guided version.</p></div>
       <a id="variant-link" href="?path=direct">Open the direct version</a>
     </section>
-    <details class="inspection">
-      <summary>View this page’s demo events</summary>
+    <div class="inspection">
       <p>Events stay in this page and reset when it reloads. They are never sent to an analytics service.</p>
       <ol id="events" class="events"></ol>
+    </div>
     </details>
   </main>
-  <footer class="wrap footer"><p>CarePath is a portfolio prototype. It does not provide consultations.</p></footer>
+  <footer class="wrap footer"><p>Practice workspace. No clinical service is provided.</p></footer>
 </body>
 </html>
