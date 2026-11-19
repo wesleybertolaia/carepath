@@ -1,5 +1,5 @@
-const { t, apply, url } = window.siteLocale;
-let variant = new URLSearchParams(location.search).get('path') === 'direct' ? 'direct' : 'guided';
+const { t, apply } = window.siteLocale;
+const direct = new URLSearchParams(location.search).get('path') === 'direct';
 const topics = {
   steps: ['How the process works', 'You’d open a private intake, share the details the care team requests, and wait for a response about the next step.'],
   availability: ['Timing and availability', 'Availability depends on the service. Starting an intake would begin a request. It would not reserve an appointment or guarantee a response time.'],
@@ -10,15 +10,8 @@ const stage = document.querySelector('#stage');
 const stepLabel = document.querySelector('#step');
 const begin = document.querySelector('#begin');
 const overview = document.querySelector('#return');
-const events = document.querySelector('#events');
 let selection = '';
 let contactWindow = 'Morning';
-
-function track(name, detail = '') {
-  const item = document.createElement('li');
-  item.textContent = t(variant) + ' / ' + t(name) + (detail ? ' / ' + t(detail) : '');
-  events.append(item);
-}
 
 function showStep(step, markup, progress) {
   flow.dataset.progress = progress;
@@ -43,7 +36,6 @@ function showTopic() {
   stage.querySelector('form').addEventListener('submit', event => {
     event.preventDefault();
     selection = new FormData(event.currentTarget).get('topic');
-    track('topic_selected', selection);
     showOverview();
   });
 }
@@ -57,7 +49,6 @@ function showOverview() {
       <button class="button" type="button">Start consultation</button>
       <button class="quiet" type="button">Choose another topic</button>
     </div>`, 2);
-  track('tailored_overview_view');
   stage.querySelector('.button').addEventListener('click', showIntake);
   stage.querySelector('.quiet').addEventListener('click', showTopic);
 }
@@ -84,7 +75,6 @@ function storeRequest(request) {
 }
 
 function showIntake() {
-  track('consultation_start');
   showStep('Sample intake', `
     <h2 tabindex="-1">Build a sample request</h2>
     <p>Use the fictional profile below. This demo never asks for personal or medical information.</p>
@@ -123,7 +113,6 @@ function showReview() {
       stage.querySelector('[role="status"]').textContent = t('This browser could not save the sample request.');
       return;
     }
-    track('demo_complete');
     showReceipt(request);
   });
 }
@@ -211,36 +200,11 @@ syncResume();
 resumeButton.addEventListener('click', showHistory);
 flow.addEventListener('close', syncResume);
 
-const variantLink = document.querySelector('#variant-link');
-function renderVariant() {
-  const direct = variant === 'direct';
-  document.querySelector('#hero-title').textContent = t(direct ? 'Start an online consultation.' : 'Request an online consultation');
-  document.querySelector('#offer-copy').textContent = t(direct
-    ? 'Open the intake preview to see where a consultation request would begin.'
-    : 'See what you’ll be asked, then send your request when you’re ready. You can check its status at any time.');
-  document.querySelector('#variant-label').textContent = t(direct ? 'You’re viewing the direct version.' : 'You’re viewing the guided version.');
-  variantLink.href = url(direct ? './' : '?path=direct');
-  variantLink.textContent = t(direct ? 'Open the guided version' : 'Open the direct version');
-  begin.textContent = t(direct ? 'Start consultation' : 'Begin a care request');
+if (direct) {
+  document.querySelector('#hero-title').textContent = t('Start an online consultation.');
+  document.querySelector('#offer-copy').textContent = t('Open the intake preview to see where a consultation request would begin.');
+  begin.textContent = t('Start consultation');
 }
-
-renderVariant();
-variantLink.addEventListener('click', event => {
-  if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
-  event.preventDefault();
-  history.replaceState(null, '', variantLink.href);
-  variant = variant === 'direct' ? 'guided' : 'direct';
-  renderVariant();
-  track('landing_view');
-});
-begin.addEventListener('click', () => {
-  if (variant === 'direct') {
-    showIntake();
-  } else {
-    track('guidance_start');
-    showTopic();
-  }
-});
+begin.addEventListener('click', direct ? showIntake : showTopic);
 overview.addEventListener('click', () => flow.close());
-track('landing_view');
 begin.hidden = false;

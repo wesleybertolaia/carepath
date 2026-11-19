@@ -7,9 +7,9 @@
   <meta name="robots" content="noindex">
   <title>CarePath | Online consultation preview</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="./style.css?v=landing">
+  <link rel="stylesheet" href="./style.css?v=wide-preview">
   <script src="./locale.js?v=project-ui"></script>
-  <script src="./app.js?v=landing" defer></script>
+  <script src="./app.js?v=wide-preview" defer></script>
   <link rel="stylesheet" href="./locale.css">
 </head>
 <body>
@@ -28,7 +28,7 @@
         <noscript><p>Enable JavaScript to use the request workspace.</p></noscript>
         <p class="privacy">Use the sample profile. No personal or medical details are needed.</p>
       </div>
-      <img class="care-hero-photo" src="./header-visual.jpg" alt="" width="1200" height="800">
+      <div class="care-photo"><img class="care-hero-photo" src="./header-visual.jpg" alt="" width="1200" height="800"></div>
       <aside class="journey" aria-labelledby="journey-title">
         <h2 id="journey-title">What happens next</h2>
         <ol>
@@ -43,16 +43,6 @@
       <div class="progress-track" aria-hidden="true"><span></span><span></span><span></span></div>
       <div id="stage"></div>
     </dialog>
-    <details class="inspection"><summary>Compare entry paths and view activity</summary>
-    <section class="testing" aria-label="Entry paths">
-      <div><h2>Compare the entry paths</h2><p id="variant-label">You’re viewing the guided version.</p></div>
-      <a id="variant-link" href="?path=direct">Open the direct version</a>
-    </section>
-    <div class="inspection">
-      <p>Events stay in this page and reset when it reloads. They are never sent to an analytics service.</p>
-      <ol id="events" class="events"></ol>
-    </div>
-    </details>
   </main>
   <footer class="wrap footer"><p>Practice workspace. No clinical service is provided.</p></footer>
 </body>
