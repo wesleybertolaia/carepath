@@ -131,3 +131,11 @@ summary { cursor: pointer; font-weight: 690; }
 
 .care-hero-photo { display: block; width: 100%; height: clamp(95px, 15vw, 165px); object-fit: cover; border-radius: 16px; margin-bottom: .85rem; }
 .hero .offer > p.signature-line { margin: 0 0 .5rem; color: #62428c; font-size: .82rem; letter-spacing: .02em; font-weight: 720; }
+
+/* The guide overlaps the image so it reads as part of the opening scene. */
+.care-scene { min-width: 0; }
+.care-hero-photo { height: clamp(160px, 21vw, 280px); margin: 0; border-radius: 24px; object-position: center 57%; }
+.care-scene .journey { position: relative; width: calc(100% - 2rem); margin: -2.75rem auto 0; padding: clamp(.9rem, 2.5vw, 1.4rem); }
+.care-scene .journey li { padding-bottom: .7rem; }
+.care-scene .journey li:last-child { padding-bottom: 0; }
+@media (max-width: 760px) { .hero { padding-block: 1.4rem; gap: 1rem; } }
