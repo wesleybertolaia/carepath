@@ -122,3 +122,9 @@ summary { cursor: pointer; font-weight: 690; }
 .journey h2 { letter-spacing: -.025em; font-size: 1.35rem; }
 .preference { display: grid; gap: .35rem; max-width: 22rem; font-weight: 650; }
 .preference select { min-height: 44px; padding: .45rem .65rem; border: 1px solid var(--line); border-radius: 10px; background: white; font: inherit; color: var(--ink); }
+
+.hero .offer { padding-block: .3rem; }
+.hero h1 { line-height: 1.03; font-weight: 620; }
+.hero .privacy { max-width: 42ch; margin-top: .9rem; }
+.journey { border-top: 3px solid #8669b7; }
+.journey li + li { padding-top: .1rem; }

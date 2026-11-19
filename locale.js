@@ -1,5 +1,9 @@
 (() => {
   const messages = {
+    "Request an online consultation": "Solicite uma consulta online",
+    "See what you’ll be asked, then send your request when you’re ready. You can check its status at any time.": "Veja quais dados seriam solicitados e envie o pedido quando estiver pronto. Você pode acompanhar o status a qualquer momento.",
+    "Use the sample profile. No personal or medical details are needed.": "Use o perfil de exemplo. Nenhum dado pessoal ou médico é necessário.",
+
     "Your care request, step by step.": "Sua solicitação de atendimento, etapa por etapa.",
     "Know what to expect before you begin. Send a request, then follow its progress in one place.": "Saiba o que esperar antes de começar. Envie sua solicitação e acompanhe o andamento em um só lugar.",
     "Begin a care request": "Iniciar solicitação de atendimento",
