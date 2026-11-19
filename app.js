@@ -115,17 +115,44 @@ function showReview() {
 }
 
 function showReceipt(request) {
+  const title = request.withdrawn ? 'Sample request withdrawn' : request.reviewed ? 'Sample review complete' : 'Sample request received';
+  const nextStep = request.withdrawn
+    ? 'This request is closed. You can return to the overview and start another sample request.'
+    : request.reviewed
+      ? 'The sample team has finished reviewing this request. No action is needed.'
+      : 'You can leave this page and check back later. If your plans change, withdraw the request here.';
   showStep('Request timeline', `
-    <h2 tabindex="-1">${request.reviewed ? 'Sample review complete' : 'Sample request received'}</h2>
+    <h2 tabindex="-1">${title}</h2>
+    <p class="next-action">${nextStep}</p>
     <dl class="receipt"><dt>Reference</dt><dd id="request-reference"></dd></dl>
     <ol class="timeline">
       <li>Sample request submitted</li>
-      <li>${request.reviewed ? 'Sample review completed' : 'Waiting for sample review'}</li>
+      <li>${request.withdrawn ? 'Withdrawn by the patient' : request.reviewed ? 'Sample review completed' : 'Waiting for sample review'}</li>
     </ol>
     <p>No real consultation was requested.</p>
-    ${request.reviewed ? '' : '<button class="button" type="button">Simulate team review</button>'}
+    ${request.reviewed || request.withdrawn ? '' : `
+      <div class="stage-actions">
+        <button class="button" type="button">Simulate team review</button>
+        <button class="quiet" id="withdraw-request" type="button">Withdraw request</button>
+      </div>`}
     <p role="status"></p>`, 3);
   stage.querySelector('#request-reference').textContent = request.reference;
+  stage.querySelector('#withdraw-request')?.addEventListener('click', () => {
+    showStep('Withdraw request', `
+      <h2 tabindex="-1">Withdraw this sample request?</h2>
+      <p>The sample team will no longer review it.</p>
+      <div class="stage-actions">
+        <button class="button" type="button">Confirm withdrawal</button>
+        <button class="quiet" type="button">Keep request</button>
+      </div>
+      <p role="status"></p>`, 3);
+    stage.querySelector('.quiet').addEventListener('click', () => showReceipt(request));
+    stage.querySelector('.button').addEventListener('click', () => {
+      const updated = { ...request, withdrawn: true };
+      if (storeRequest(updated)) showReceipt(updated);
+      else stage.querySelector('[role="status"]').textContent = t('This browser could not save the sample request.');
+    });
+  });
   stage.querySelector('.button')?.addEventListener('click', () => {
     const updated = { ...request, reviewed: true };
     if (storeRequest(updated)) showReceipt(updated);

@@ -107,3 +107,5 @@ summary { cursor: pointer; font-weight: 690; }
 .receipt { display: grid; grid-template-columns: auto 1fr; gap: .35rem 1rem; padding: 1rem; border-radius: 14px; background: #f5effd; }
 .receipt dt { color: var(--muted); } .receipt dd { margin: 0; font-weight: 650; overflow-wrap: anywhere; }
 .timeline { padding-left: 1.3rem; } .timeline li { margin: .45rem 0; }
+
+#stage .next-action { padding: .8rem 1rem; border-left: 3px solid var(--accent); border-radius: 8px; background: #f5effd; }

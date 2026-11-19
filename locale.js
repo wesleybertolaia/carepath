@@ -1,5 +1,16 @@
 (() => {
   const messages = {
+    "Sample request withdrawn": "Solicitação de exemplo retirada",
+    "This request is closed. You can return to the overview and start another sample request.": "Esta solicitação foi encerrada. Você pode voltar ao início e criar outra solicitação de exemplo.",
+    "The sample team has finished reviewing this request. No action is needed.": "A equipe fictícia concluiu a revisão. Nenhuma ação é necessária.",
+    "You can leave this page and check back later. If your plans change, withdraw the request here.": "Você pode sair desta página e voltar depois. Se mudar de ideia, retire a solicitação aqui.",
+    "Withdrawn by the patient": "Retirada pelo paciente",
+    "Withdraw request": "Retirar solicitação",
+    "Withdraw this sample request?": "Retirar esta solicitação de exemplo?",
+    "The sample team will no longer review it.": "A equipe fictícia não vai mais analisar esta solicitação.",
+    "Confirm withdrawal": "Confirmar retirada",
+    "Keep request": "Manter solicitação",
+
     "Sample intake": "Formulário de exemplo",
     "Build a sample request": "Monte uma solicitação de exemplo",
     "Use the fictional profile below. This demo never asks for personal or medical information.": "Use o perfil fictício abaixo. Esta demo não pede informações pessoais ou médicas.",
