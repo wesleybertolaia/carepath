@@ -1,3 +1,4 @@
+const { t, apply, url } = window.siteLocale;
 const variant = new URLSearchParams(location.search).get('path') === 'direct' ? 'direct' : 'guided';
 const topics = {
   steps: ['How the process works', 'You’d open a private intake, share the details the care team requests, and wait for a response about the next step.'],
@@ -15,7 +16,7 @@ let selection = '';
 
 function track(name, detail = '') {
   const item = document.createElement('li');
-  item.textContent = variant + ' / ' + name + (detail ? ' / ' + detail : '');
+  item.textContent = t(variant) + ' / ' + t(name) + (detail ? ' / ' + t(detail) : '');
   events.append(item);
 }
 
@@ -23,8 +24,9 @@ function showStep(step, markup, progress) {
   hero.hidden = true;
   flow.hidden = false;
   flow.dataset.progress = progress;
-  stepLabel.textContent = step;
+  stepLabel.textContent = t(step);
   stage.innerHTML = '<div>' + markup + '</div>';
+  apply(stage);
   stage.querySelector('h2').focus();
 }
 
@@ -80,7 +82,7 @@ if (variant === 'direct') {
   document.querySelector('#offer-copy').textContent = 'Open the intake preview to see where a consultation request would begin.';
   document.querySelector('#variant-label').textContent = 'You’re viewing the direct version.';
   const link = document.querySelector('#variant-link');
-  link.href = './';
+  link.href = url('./');
   link.textContent = 'Open the guided version';
   begin.textContent = 'Start consultation';
 }
