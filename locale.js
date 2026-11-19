@@ -1,5 +1,18 @@
 (() => {
   const messages = {
+    "Your care request, step by step.": "Sua solicitação de atendimento, etapa por etapa.",
+    "Know what to expect before you begin. Send a request, then follow its progress in one place.": "Saiba o que esperar antes de começar. Envie sua solicitação e acompanhe o andamento em um só lugar.",
+    "Begin a care request": "Iniciar solicitação de atendimento",
+    "Review your request": "Revise sua solicitação",
+    "Check your details before you send them.": "Confira os dados antes de enviar.",
+    "Follow your request": "Acompanhe sua solicitação",
+    "Return to your history to see what changed.": "Volte ao histórico para acompanhar as mudanças.",
+    "Preferred contact window": "Período de contato preferido",
+    "Contact window": "Período de contato",
+    "Morning": "Manhã",
+    "Afternoon": "Tarde",
+    "Evening": "Noite",
+
     "Online consultations": "Consultas online",
     "Start your care request.": "Inicie sua solicitação de atendimento.",
     "See what your request involves and track its progress from submission to review.": "Entenda as etapas e acompanhe sua solicitação do envio à revisão.",

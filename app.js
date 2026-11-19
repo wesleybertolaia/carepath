@@ -13,6 +13,7 @@ const begin = document.querySelector('#begin');
 const overview = document.querySelector('#return');
 const events = document.querySelector('#events');
 let selection = '';
+let contactWindow = 'Morning';
 
 function track(name, detail = '') {
   const item = document.createElement('li');
@@ -90,6 +91,11 @@ function showIntake() {
     <h2 tabindex="-1">Build a sample request</h2>
     <p>Use the fictional profile below. This demo never asks for personal or medical information.</p>
     <form>
+      <label class="preference">Preferred contact window
+        <select name="contactWindow">
+          ${['Morning', 'Afternoon', 'Evening'].map(value => `<option ${contactWindow === value ? 'selected' : ''}>${value}</option>`).join('')}
+        </select>
+      </label>
       <fieldset><legend>Sample profile</legend>
         <label class="choice"><input type="checkbox" required> Use the sample patient profile</label>
       </fieldset>
@@ -97,6 +103,7 @@ function showIntake() {
     </form>`, 3);
   stage.querySelector('form').addEventListener('submit', event => {
     event.preventDefault();
+    contactWindow = new FormData(event.currentTarget).get('contactWindow');
     showReview();
   });
 }
@@ -104,7 +111,7 @@ function showIntake() {
 function showReview() {
   showStep('Review', `
     <h2 tabindex="-1">Check your request</h2>
-    <dl class="receipt"><dt>Patient</dt><dd>Alex Morgan</dd><dt>Request type</dt><dd>First consultation</dd></dl>
+    <dl class="receipt"><dt>Patient</dt><dd>Alex Morgan</dd><dt>Request type</dt><dd>First consultation</dd><dt>Contact window</dt><dd>${contactWindow}</dd></dl>
     <p>This sends a fictional request to the demo inbox on this device.</p>
     <div class="stage-actions">
       <button class="button" type="button">Send sample request</button>
@@ -113,7 +120,7 @@ function showReview() {
     <p role="status"></p>`, 3);
   stage.querySelector('.quiet').addEventListener('click', showIntake);
   stage.querySelector('.button').addEventListener('click', () => {
-    const request = { reference: 'CP-' + crypto.randomUUID().slice(0, 6).toUpperCase(), reviewed: false };
+    const request = { reference: 'CP-' + crypto.randomUUID().slice(0, 6).toUpperCase(), reviewed: false, contactWindow, createdAt: new Date().toISOString() };
     if (!storeRequest(request)) {
       stage.querySelector('[role="status"]').textContent = t('This browser could not save the sample request.');
       return;
@@ -146,6 +153,14 @@ function showReceipt(request) {
       </div>`}
     <p role="status"></p>`, 3);
   stage.querySelector('#request-reference').textContent = request.reference;
+  if (['Morning', 'Afternoon', 'Evening'].includes(request.contactWindow)) {
+    const receipt = stage.querySelector('.receipt');
+    const label = document.createElement('dt');
+    const value = document.createElement('dd');
+    label.textContent = t('Contact window');
+    value.textContent = t(request.contactWindow);
+    receipt.append(label, value);
+  }
   const historyLink = document.createElement('button');
   historyLink.className = 'quiet history-link';
   historyLink.type = 'button';
